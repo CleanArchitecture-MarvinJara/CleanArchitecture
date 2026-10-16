@@ -1,0 +1,22 @@
+﻿namespace CleanArchitecture.Domain.Vehiculos
+{
+    public record Moneda(decimal Monto, TipoMoneda TipoMoneda)
+    {
+        // Nos aseguramos que el cliente pague periodicamente con el mismo tipo de moneda
+        public static Moneda operator +(Moneda primero, Moneda segundo)
+        {
+            if (!primero.TipoMoneda.Equals(segundo.TipoMoneda))
+            {
+                throw new InvalidOperationException("El tipo de moneda debe ser el mismo");
+            }
+
+            return new Moneda(primero.Monto + segundo.Monto, primero.TipoMoneda);
+        }
+
+        // Inicializador de Moneda en zero
+        public static Moneda Zero() => new(0, TipoMoneda.None);
+        public static Moneda Zero(TipoMoneda tipoMoneda) => new(0, tipoMoneda);
+
+        public bool IsZero() => this == Zero(TipoMoneda);
+    }
+}
