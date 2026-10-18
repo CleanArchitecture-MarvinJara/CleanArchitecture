@@ -11,5 +11,12 @@ namespace CleanArchitecture.Infrastructure
         {
 
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Con esto especificamos que el Assembly contiene el DbContext
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
