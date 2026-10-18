@@ -8,7 +8,7 @@ namespace CleanArchitecture.Domain.Alquileres
 
         Task<bool> IsOverlappingAsync(
             Vehiculo vehiculo, 
-            DateRange dateRange, 
+            DateRange duracion, 
             CancellationToken cancellationToken=default);
 
         void Add(Alquiler alquiler);
