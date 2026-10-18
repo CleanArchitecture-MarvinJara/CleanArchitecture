@@ -1,0 +1,35 @@
+﻿using CleanArchitecture.Application.Abstractions.Clock;
+using CleanArchitecture.Application.Abstractions.Email;
+using CleanArchitecture.Infrastructure.Clock;
+using CleanArchitecture.Infrastructure.Email;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace CleanArchitecture.Infrastructure
+{
+    public static class DependencyInjection
+    {
+        // Este IServiceCollection es una extension de la interfaz IServiceCollection
+        public static IServiceCollection AddInfrastructure(
+            this IServiceCollection services,
+            IConfiguration configuration)
+        {
+            services.AddTransient<IDateTimeProvider,DateTimeProvider>();
+            services.AddTransient<IEmailService, EmailService>();
+
+            // Obtenemos la estructura ConnectionString y buscamos Database, si no existe lanzamos un error
+            // Utilizamos esta cadena de conexion para inicializar los servicios de EntityFramework y Dapper
+            var connectionString = configuration.GetConnectionString("Database")
+                ?? throw new ArgumentNullException(nameof(configuration));
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseNpgsql(connectionString).UseSnakeCaseNamingConvention();
+            });
+
+
+            return services;
+        }
+    }
+}
