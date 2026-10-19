@@ -36,6 +36,9 @@ namespace CleanArchitecture.Infrastructure.Configurations
                 priceBuilder.Property(moneda => moneda.TipoMoneda)
                     .HasConversion(tipoMoneda => tipoMoneda.Codigo, codigo => TipoMoneda.FromCodigo(codigo!));
             });
+
+            // Agregamos versionamiento para aplicar Optimist Concurrency
+            builder.Property<uint>("Version").IsRowVersion();
         }
     }
 }
