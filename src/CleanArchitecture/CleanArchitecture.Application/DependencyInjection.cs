@@ -8,7 +8,7 @@ namespace CleanArchitecture.Application
     // Clase de registro y gestion de dependencias
     public static class DependencyInjection
     {
-        public static IServiceCollection AddAplication(this IServiceCollection services)
+        public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddMediatR(configuration =>
             {
