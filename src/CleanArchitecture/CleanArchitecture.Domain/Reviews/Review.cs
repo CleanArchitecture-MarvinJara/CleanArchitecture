@@ -28,8 +28,8 @@ namespace CleanArchitecture.Domain.Reviews
         public Guid AlquilerId { get; private set; }
         public Guid UserId { get; private set; }
 
-        public Rating Rating { get; private set; }
-        public Comentario Comentario { get; private set; }
+        public Rating? Rating { get; private set; }
+        public Comentario? Comentario { get; private set; }
 
         public DateTime? FechaCreacion { get; private set; }
 
