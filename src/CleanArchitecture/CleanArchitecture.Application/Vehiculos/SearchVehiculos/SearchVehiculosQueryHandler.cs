@@ -53,9 +53,9 @@ namespace CleanArchitecture.Application.Vehiculos.SearchVehiculos
                         SELECT 1
                         FROM alquileres AS b
                         WHERE
-                            b.vehiculo_id = a.id
+                            b.vehiculo_id = a.id AND
                             b.duracion_inicio <= @EndDate AND
-                            b.duracion_final >= @StartDate AND
+                            b.duracion_fin >= @StartDate AND
                             b.status = ANY(@ActiveAlquilerStatuses)
                     )
                 """;
