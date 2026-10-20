@@ -74,6 +74,6 @@ namespace CleanArchitecture.Api.Middleware
             string Type,
             string Title,
             string Detail,
-            IEnumerable<object> Errors);
+            IEnumerable<object>? Errors);
     }
 }
