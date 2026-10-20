@@ -23,6 +23,8 @@ if (app.Environment.IsDevelopment())
 app.ApplyMigration();
 app.SeedData();
 
+app.UserCustomExceptionHandler();
+
 app.MapControllers();
 
 app.Run();
