@@ -38,6 +38,11 @@ namespace CleanArchitecture.Api.Extensions
                 });
             }
 
+            //Limpiamos la data de prueba
+            const string sqlDelete = "TRUNCATE TABLE public.vehiculos RESTART IDENTITY CASCADE";
+            connection.Execute(sqlDelete);
+
+            //Agregamos data de prueba
             const string sql = """
                     INSERT INTO public.vehiculos
                         (id, vin, modelo, direccion_pais, direccion_departamento, direccion_provincia, direccion_ciudad, direccion_calle, precio_monto, precio_tipo_moneda, mantenimiento_monto, mantenimiento_tipo_moneda, accesorios, fecha_ultimo_alquiler)

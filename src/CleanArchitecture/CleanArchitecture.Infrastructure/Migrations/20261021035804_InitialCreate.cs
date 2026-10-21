@@ -99,8 +99,8 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     vehiculo_id = table.Column<Guid>(type: "uuid", nullable: false),
                     alquiler_id = table.Column<Guid>(type: "uuid", nullable: false),
                     user_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    rating = table.Column<int>(type: "integer", nullable: false),
-                    comentario = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    rating = table.Column<int>(type: "integer", nullable: true),
+                    comentario = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
                     fecha_creacion = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>

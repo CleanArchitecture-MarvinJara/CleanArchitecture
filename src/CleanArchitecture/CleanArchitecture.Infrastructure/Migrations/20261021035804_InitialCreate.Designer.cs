@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CleanArchitecture.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20261020054433_InitialCreate")]
+    [Migration("20261021035804_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -88,7 +88,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .HasColumnName("alquiler_id");
 
                     b.Property<string>("Comentario")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)")
                         .HasColumnName("comentario");
@@ -97,7 +96,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("fecha_creacion");
 
-                    b.Property<int>("Rating")
+                    b.Property<int?>("Rating")
                         .HasColumnType("integer")
                         .HasColumnName("rating");
 
