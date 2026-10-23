@@ -37,14 +37,16 @@ namespace CleanArchitecture.Application.Alquileres.ReservarAlquiler
             ReservarAlquilerCommand request, 
             CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetByIdAsync(request.UserId,cancellationToken);
+            var userId = new UserId(request.UserId);
+            var user = await _userRepository.GetByIdAsync(userId,cancellationToken);
 
             if (user is null)
             {
                 return Result.Failure<Guid>(UserErrors.NotFound);
             }
 
-            var vehiculo = await _vehiculoRepository.GetByIdAsync(request.VehiculoId,cancellationToken);
+            var vehiculoId = new VehiculoId(request.VehiculoId);
+            var vehiculo = await _vehiculoRepository.GetByIdAsync(vehiculoId,cancellationToken);
 
             if (vehiculo is null)
             {
@@ -62,7 +64,7 @@ namespace CleanArchitecture.Application.Alquileres.ReservarAlquiler
             {
                 var alquiler = Alquiler.Reservar(
                     vehiculo,
-                    user.Id,
+                    user.Id!,
                     duracion,
                     _dateTimeProvider.currentTime,
                     _precioService);
@@ -72,7 +74,7 @@ namespace CleanArchitecture.Application.Alquileres.ReservarAlquiler
                 // Toma todos los elementos dentro de la memoria de entity framework y las envia a la BD
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-                return alquiler.Id;
+                return alquiler.Id!.Value;
             } catch(ConcurrencyException)
             {
                 return Result.Failure<Guid>(AlquilerErrors.Overlap);
