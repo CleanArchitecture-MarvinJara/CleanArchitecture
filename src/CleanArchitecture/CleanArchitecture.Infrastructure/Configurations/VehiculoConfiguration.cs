@@ -12,6 +12,9 @@ namespace CleanArchitecture.Infrastructure.Configurations
             builder.ToTable("vehiculos");
             builder.HasKey(vehiculo => vehiculo.Id);
 
+            builder.Property(vehiculo => vehiculo.Id)
+                .HasConversion(vehiculoId => vehiculoId!.Value, value => new VehiculoId(value));
+
             // A nivel de BD los componetes de la entidad Direccion pasaran a formar parte de la tabla vehiculos
             builder.OwnsOne(vehiculo => vehiculo.Direccion);
 
