@@ -18,7 +18,7 @@ namespace CleanArchitecture.Api.Controllers.Vehiculos
         }
 
         [Authorize]
-        [HttpGet]
+        [HttpGet("search")]
         public async Task<IActionResult> SearchVehicuoos(
             DateOnly startDate,
             DateOnly endDate,
