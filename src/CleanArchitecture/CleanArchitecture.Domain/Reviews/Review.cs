@@ -1,17 +1,19 @@
 using CleanArchitecture.Domain.Abstractions;
 using CleanArchitecture.Domain.Alquileres;
 using CleanArchitecture.Domain.Reviews.Events;
+using CleanArchitecture.Domain.Users;
+using CleanArchitecture.Domain.Vehiculos;
 
 namespace CleanArchitecture.Domain.Reviews
 {
-    public sealed class Review : Entity
+    public sealed class Review : Entity<ReviewId>
     {
         private Review() { }
         private Review(
-            Guid id,
-            Guid vehiculoId,
-            Guid alquilerId,
-            Guid userId,
+            ReviewId id,
+            VehiculoId vehiculoId,
+            AlquilerId alquilerId,
+            UserId userId,
             Rating rating,
             Comentario comentario,
             DateTime? fechaCreacion) : base(id)
@@ -24,9 +26,9 @@ namespace CleanArchitecture.Domain.Reviews
             FechaCreacion = fechaCreacion;
         }
 
-        public Guid VehiculoId { get; private set; }
-        public Guid AlquilerId { get; private set; }
-        public Guid UserId { get; private set; }
+        public VehiculoId? VehiculoId { get; private set; }
+        public AlquilerId? AlquilerId { get; private set; }
+        public UserId? UserId { get; private set; }
 
         public Rating? Rating { get; private set; }
         public Comentario? Comentario { get; private set; }
@@ -46,16 +48,16 @@ namespace CleanArchitecture.Domain.Reviews
             }
 
             var review = new Review(
-                Guid.NewGuid(),
-                alquiler.VehiculoId,
-                alquiler.Id,
-                alquiler.UserId,
+                ReviewId.New(),
+                alquiler.VehiculoId!,
+                alquiler.Id!,
+                alquiler.UserId!,
                 rating,
                 comentario,
                 fechaCreacion
             );
 
-            review.RaiseDomainEvent(new ReviewCreatedDomain(review.Id));
+            review.RaiseDomainEvent(new ReviewCreatedDomain(review.Id!));
 
             return review;
         }

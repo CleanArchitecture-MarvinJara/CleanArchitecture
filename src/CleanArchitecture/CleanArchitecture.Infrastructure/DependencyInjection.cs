@@ -26,9 +26,9 @@ namespace CleanArchitecture.Infrastructure
             services.AddTransient<IDateTimeProvider,DateTimeProvider>();
             services.AddTransient<IEmailService, EmailService>();
 
-            // Obtenemos la estructura ConnectionString y buscamos Database, si no existe lanzamos un error
+            // Obtenemos la estructura ConnectionString y buscamos ConnectionString, si no existe lanzamos un error
             // Utilizamos esta cadena de conexion para inicializar los servicios de EntityFramework y Dapper
-            var connectionString = configuration.GetConnectionString("Database")
+            var connectionString = configuration.GetConnectionString("ConnectionString")
                 ?? throw new ArgumentNullException(nameof(configuration));
 
             services.AddDbContext<ApplicationDbContext>(options =>
