@@ -1,4 +1,5 @@
 ﻿using CleanArchitecture.Domain.Abstractions;
+using CleanArchitecture.Domain.Roles;
 using CleanArchitecture.Domain.Users.Events;
 
 namespace CleanArchitecture.Domain.Users
@@ -38,5 +39,7 @@ namespace CleanArchitecture.Domain.Users
             user.RaiseDomainEvent(new UserCreateDomainEvent(user.Id!));
             return user;
         }
+
+        public ICollection<Role>? Roles { get; set; }
     }
 }
