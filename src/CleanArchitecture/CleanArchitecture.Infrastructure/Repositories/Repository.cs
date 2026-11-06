@@ -1,4 +1,5 @@
 ﻿using CleanArchitecture.Domain.Abstractions;
+using CleanArchitecture.Infrastructure.Specifications;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitecture.Infrastructure.Repositories
@@ -25,6 +26,27 @@ namespace CleanArchitecture.Infrastructure.Repositories
         public void Add(TEntity entity)
         {
             DbContext.Add(entity);
+        }
+
+        // Metodo que le agrega las condiciones y expresiones logicas al query inicial
+        public IQueryable<TEntity> ApplySpecification(
+            ISpecification<TEntity, TEntityId> spec)
+        {
+            return SpecificationEvaluator<TEntity, TEntityId>
+                    .GetQuery(DbContext.Set<TEntity>().AsQueryable(), spec);
+        }
+
+        public async Task<IReadOnlyList<TEntity>> GetAllWithSpec(
+            ISpecification<TEntity, TEntityId> spec)
+        {
+            // El toListAsync envia el objeto queryable a la base de datos, ya en lenguaje sql
+            return await ApplySpecification(spec).ToListAsync();
+        }
+
+        public async Task<int> CountAsync(
+            ISpecification<TEntity, TEntityId> spec)
+        {
+            return await ApplySpecification(spec).CountAsync();
         }
     }
 }
